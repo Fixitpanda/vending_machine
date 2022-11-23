@@ -1,6 +1,6 @@
 import json
 
-coins_file = "data/supportedCoins.json"
+coins_file = "./data/supportedCoins.json"
 inventory = "./data/inventory.json"
 
 

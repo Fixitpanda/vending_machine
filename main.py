@@ -1,15 +1,13 @@
 import os
 import time
-
-# local packages
-import dataManager
-import localColors
+from components import localColors, dataManager
 
 inserted_coins = {}  # empty list for coins processing.
 
 
 # get data by self-oriented index from data with staticmethod.
 class getDrink:
+    # static functions returns parameters by index number, without looping.
     @staticmethod
     def name(index_number) -> int:
         return list(dataManager.drinks.types.keys())[index_number]
@@ -62,14 +60,12 @@ def admin_panel():
     return None
 
 
-# function to fix a bug
+# function to fix a bug // should be simplified.
 def check_type(parameter):
     if type(parameter) == list:
         return sum(parameter)
     else:
         return parameter
-
-    # adds 1 to inventory of each coin that was inserted into the machine.
 
 
 # create key:value in dictionary or find by key and insert +1 to value.
@@ -105,12 +101,14 @@ def start_vending_machine():
         try:
             os.system('cls')  # cleaning terminal after each loop.
             drinks_menu_type_out()
-            selected_drink_by_user = int(input(f"{localColors.select.BOLD}What is the drink number?: {localColors.select.ENDC}"))
+            selected_drink_by_user = int(
+                input(f"{localColors.select.BOLD}What is the drink number?: {localColors.select.ENDC}"))
             if selected_drink_by_user < 0:
                 raise ValueError("Negative index not supported by the menu.")
 
             # check if item exist and if in stock before continue, otherwise will be thrown to exception.
-            if selected_drink_by_user < len(dataManager.drinks.types.keys()) and getDrink.inventory(selected_drink_by_user) > 0:
+            if selected_drink_by_user < len(dataManager.drinks.types.keys()) and getDrink.inventory(
+                    selected_drink_by_user) > 0:
                 while True:
                     try:
                         input_user_coin = round(float(input("Insert a coin: ")), 1)
@@ -168,7 +166,7 @@ def start_vending_machine():
             else:
                 raise
 
-        # errors output handled here.
+        # errors output handled here. you can customize output put just or just it be.
         except Exception as err:
             try:
                 if getDrink.inventory(selected_drink_by_user) == 0:
@@ -185,7 +183,8 @@ def start_vending_machine():
                     print(f"{localColors.select.FAIL}Not in menu, invalid drink number!{localColors.select.ENDC}")
                     time.sleep(1)
                 else:
-                    print(f"{localColors.select.WARNING}Oh Oh something is really fucked up here!{localColors.select.ENDC} Error inside the error handler: {localColors.select.FAIL}{err}{localColors.select.ENDC}")
+                    print(
+                        f"{localColors.select.WARNING}Oh Oh something is really fucked up here!{localColors.select.ENDC} Error inside the error handler: {localColors.select.FAIL}{err}{localColors.select.ENDC}")
 
 
 if __name__ == '__main__':
