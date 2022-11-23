@@ -1,5 +1,6 @@
 import os
 import time
+from components.functions import *
 from components import localColors, dataManager
 
 inserted_coins = {}  # empty list for coins processing.
@@ -19,61 +20,6 @@ class getDrink:
     @staticmethod
     def inventory(index_number) -> int:
         return list(dataManager.drinks.types.values())[index_number][1]
-
-
-# before accepting the coin, checking if the coins supported.
-def check_if_coin_supported(user_coin):
-    if user_coin in dataManager.coins.types:
-        update_inserted_coins_dict(user_coin)
-    else:
-        print("coin not supported")
-
-
-# this function will handle all refunds and update inventory
-def refunds_handler():
-    # refund by available coins
-    # refund from larger to smaller
-    # should update coins once refunded
-    return None
-
-
-# before processing the order, this function will check if we have change to return to customer in case he overpaid.
-def coins_inventory_validation():
-    # before processing the order, need to make sure we have a change for the customer
-    # if not have change then process a refund of the same coin and cancel.
-    return None
-
-
-# api credit card processing (DEMO).
-def credit_card_processing():
-    # need to make sure no coins will be updated.
-    # need to make sure it will validate the credit card and funds by api.
-    # once approved, should process the order. no refunds will be processed.
-    return None
-
-
-# admin panel will be here.
-def admin_panel():
-    # secret key to enter the admin panel
-    # need to add the admin menu and functionality
-    # should consider to place the admin panel in a separate file.
-    return None
-
-
-# function to fix a bug // should be simplified.
-def check_type(parameter):
-    if type(parameter) == list:
-        return sum(parameter)
-    else:
-        return parameter
-
-
-# create key:value in dictionary or find by key and insert +1 to value.
-def update_inserted_coins_dict(user_coin: str):
-    if user_coin in inserted_coins.keys():
-        inserted_coins.update({user_coin: inserted_coins.get(user_coin, 0) + 1})
-    else:
-        inserted_coins.update({user_coin: 1})
 
 
 # calculating total sum of all coins in the inserted_coins dictionary.
@@ -116,7 +62,7 @@ def start_vending_machine():
                             inserted_coins.clear()
                             break
                         else:
-                            check_if_coin_supported(input_user_coin)
+                            check_if_coin_supported(input_user_coin, dataManager.coins.types, inserted_coins)
                             more_needed = getDrink.value(selected_drink_by_user) - calculate_sum_of_inserted_coins()
                             if more_needed > 0:
                                 print(
