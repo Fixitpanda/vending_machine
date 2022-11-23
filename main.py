@@ -109,7 +109,8 @@ def start_vending_machine():
                 input(f"{localColors.select.BOLD}What is the drink number?: {localColors.select.ENDC}"))
 
             # check if item exist and if in stock before continue.
-            if selected_drink_by_user < len(dataManager.drinks.types.keys()) and getDrink.inventory(selected_drink_by_user) > 0:
+            if selected_drink_by_user < len(dataManager.drinks.types.keys()) and getDrink.inventory(
+                    selected_drink_by_user) > 0:
                 while True:
                     try:
                         input_user_coin = round(float(input("Insert a coin: ")), 1)
@@ -171,15 +172,17 @@ def start_vending_machine():
                 elif getDrink.inventory(selected_drink_by_user) <= 0:
                     print(f"{localColors.select.FAIL}Sorry, this drink out of stock!{localColors.select.ENDC}")
                     time.sleep(1)
-                else:
-                    print("Invalid drink number")
-                    time.sleep(1)
 
         # everything that falling under "error" in first loop.
         except Exception as err:
-            print(f"{localColors.select.FAIL}{err}{localColors.select.ENDC}")
-            pass
-            # raise
+            if "list index out of range" or "invalid literal" in str(err):
+                print(f"{localColors.select.FAIL}Not in menu, invalid drink number!{localColors.select.ENDC}")
+                time.sleep(1)
+                pass
+            else:
+                print(f"{localColors.select.FAIL}{err}{localColors.select.ENDC}")
+                time.sleep(1)
+                pass
 
 
 if __name__ == '__main__':
