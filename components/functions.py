@@ -20,19 +20,19 @@ def update_inserted_coins_dict(user_coin: str, inserted_coins_dict: dict):
         inserted_coins_dict.update({user_coin: 1})
 
 
-##########################################
-# FEATURES THAT SHOULD BE ADDED IS BELOW #
-##########################################
-
-# TO ADD: if coins inserted but order cancelled by "99" then refund coins.
-
-# TO ADD: before accepting the coin, checking if the coins supported.
+# before accepting the coin, checking if the coins supported.
 def check_if_coin_supported(user_coin, user_data, inserted_coins_dict):
     if user_coin in user_data:
         update_inserted_coins_dict(user_coin, inserted_coins_dict)
     else:
         print("coin not supported")
 
+
+##########################################
+# FEATURES THAT SHOULD BE ADDED IS BELOW #
+##########################################
+
+# TO ADD: if coins inserted but order cancelled by "99" then refund coins.
 
 # TO ADD: this function will handle all refunds and update inventory
 def refunds_handler():
