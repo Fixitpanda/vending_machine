@@ -158,31 +158,37 @@ def start_vending_machine():
                                 dataManager.update_file("Drinks", dataManager.drinks.types)
                                 break
 
-                    # everything that falling under "error" in the 2nd loop.
+                    # error handling inside the internal loop
                     except Exception as err:
                         print(f"{localColors.select.FAIL}{err}{localColors.select.ENDC}")
                         pass
-                        # raise # for debug purposes
+                        # raise  # use raise for debug purposes
 
-            # everything that doesn't match general conditions therefore can type here new conditions.
+            # if it doesn't match general conditions will be thrown to error exception.
             else:
-                if selected_drink_by_user == 99:
-                    print("You already in main menu!")
-                    time.sleep(1)
-                elif getDrink.inventory(selected_drink_by_user) <= 0:
+                raise
+
+        # errors scenarios handled here.
+        except Exception as err:
+            try:
+                if getDrink.inventory(selected_drink_by_user) == 0:
                     print(f"{localColors.select.FAIL}Sorry, this drink out of stock!{localColors.select.ENDC}")
                     time.sleep(1)
+                    pass
+                elif selected_drink_by_user == 99:
+                    print("You already in main menu!")
+                    time.sleep(1)
 
-        # everything that falling under "error" in first loop.
-        except Exception as err:
-            if "list index out of range" or "invalid literal" in str(err):
-                print(f"{localColors.select.FAIL}Not in menu, invalid drink number!{localColors.select.ENDC}")
-                time.sleep(1)
-                pass
-            else:
-                print(f"{localColors.select.FAIL}{err}{localColors.select.ENDC}")
-                time.sleep(1)
-                pass
+                else:
+                    print(f"{localColors.select.FAIL}{err}{localColors.select.ENDC}")
+                    time.sleep(1)
+                    pass
+            except Exception as err:
+                if "Error --> main loop." or "list index out of range" or "invalid literal for int()" in str(err):
+                    print(f"{localColors.select.FAIL}Not in menu, invalid drink number!{localColors.select.ENDC}")
+                    time.sleep(1)
+                else:
+                    print(f"{localColors.select.WARNING}Oh Oh something is really fucked up here!{localColors.select.ENDC} Error inside the error handler: {localColors.select.FAIL}{err}{localColors.select.ENDC}")
 
 
 if __name__ == '__main__':
