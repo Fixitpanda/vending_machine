@@ -1,31 +1,12 @@
 import os
 import time
+
+# local classes, functions, packages.
 from components.functions import *
+from components.classes import *
 from components import localColors, dataManager
 
 inserted_coins = {}  # empty list for coins processing.
-
-
-# get data by self-oriented index from data with staticmethod.
-class getDrink:
-    # static functions returns parameters by index number, without looping.
-    @staticmethod
-    def name(index_number) -> int:
-        return list(dataManager.drinks.types.keys())[index_number]
-
-    @staticmethod
-    def value(index_number) -> int:
-        return list(dataManager.drinks.types.values())[index_number][0]
-
-    @staticmethod
-    def inventory(index_number) -> int:
-        return list(dataManager.drinks.types.values())[index_number][1]
-
-
-# calculating total sum of all coins in the inserted_coins dictionary.
-def calculate_sum_of_inserted_coins():
-    total_value = [round(float(value_loop), 1) * quantity for value_loop, quantity in inserted_coins.items()]
-    return round(sum(total_value), 1)
 
 
 # creating colorful menu based on drinks/stock inside the inventory.json file.
@@ -63,10 +44,11 @@ def start_vending_machine():
                             break
                         else:
                             check_if_coin_supported(input_user_coin, dataManager.coins.types, inserted_coins)
-                            more_needed = getDrink.value(selected_drink_by_user) - calculate_sum_of_inserted_coins()
+                            more_needed = getDrink.value(selected_drink_by_user) - calculate_sum_of_inserted_coins(
+                                inserted_coins)
                             if more_needed > 0:
                                 print(
-                                    f"Insert more: {getDrink.value(selected_drink_by_user) - calculate_sum_of_inserted_coins()}")
+                                    f"Insert more: {getDrink.value(selected_drink_by_user) - calculate_sum_of_inserted_coins(inserted_coins)}")
                             else:
                                 print("Processing...")
                                 time.sleep(1)
@@ -76,7 +58,7 @@ def start_vending_machine():
                                 # refund the change
                                 if more_needed < 0:
                                     print(
-                                        f'Refunding: {round(calculate_sum_of_inserted_coins() - getDrink.value(selected_drink_by_user), 1)} ILS')
+                                        f'Refunding: {round(calculate_sum_of_inserted_coins(inserted_coins) - getDrink.value(selected_drink_by_user), 1)} ILS')
                                     time.sleep(1)
                                     print('Dont forget your exchange!')
                                     time.sleep(1)

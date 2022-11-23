@@ -1,3 +1,9 @@
+# calculating total sum of all coins in the inserted_coins dictionary.
+def calculate_sum_of_inserted_coins(inserted_coins_dict):
+    total_value = [round(float(value_loop), 1) * quantity for value_loop, quantity in inserted_coins_dict.items()]
+    return round(sum(total_value), 1)
+
+
 # function to fix a bug // should be simplified.
 def check_type(parameter):
     if type(parameter) == list:
