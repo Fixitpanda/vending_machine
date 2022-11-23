@@ -4,8 +4,11 @@ from components.functions import *
 from components import localColors, dataManager
 from components import classes
 
-inserted_coins = {}  # empty list for coins processing.
-getDrink = classes.getDrink(dataManager.drinks.types)  # passing drinks to class getDrinks
+# empty list to store inserted coins in the memory.
+inserted_coins = {}
+
+# passing drinks to class getDrinks
+getDrink = classes.getDrink(dataManager.drinks.types)
 
 
 # creating colorful menu based on drinks/stock inside the inventory.json file.
@@ -54,7 +57,7 @@ def start_vending_machine():
                                 print("Preparing your drink...")
                                 time.sleep(1)
 
-                                # refund the change
+                                # refunding if there is a change.
                                 if more_needed < 0:
                                     print(
                                         f'Refunding: {round(calculate_sum_of_inserted_coins(inserted_coins) - getDrink.value(selected_drink_by_user), 1)} ILS')
@@ -70,30 +73,30 @@ def start_vending_machine():
                                     dataManager.available_coins.types.update(
                                         {str(key): [value + get_value_from_inventory]})
 
-                                # save updated inventory to json file
+                                # saving updated inventory to json file.
                                 dataManager.update_file("CoinsStock", dataManager.available_coins.types)
 
-                                # resetting the inventory
+                                # resetting the inventory.
                                 inserted_coins.clear()
 
-                                # updating inventory
+                                # updating inventory.
                                 dataManager.drinks.types.update({getDrink.name(selected_drink_by_user): [
                                     getDrink.value(selected_drink_by_user),
                                     getDrink.inventory(selected_drink_by_user) - 1]})
                                 dataManager.update_file("Drinks", dataManager.drinks.types)
                                 break
 
-                    # error handling inside the internal loop
+                    # error handling inside the internal loop, any errors will be shown but skipped.
                     except Exception as err:
                         print(f"{localColors.select.FAIL}{err}{localColors.select.ENDC}")
                         pass
                         # raise  # use raise for debug purposes
 
-            # if it doesn't match general conditions will be thrown to error exception.
+            # if it doesn't match general conditions, it will be thrown to error exception.
             else:
                 raise
 
-        # errors output handled here. you can customize output put just or just it be.
+        # errors output handled here. you can customize output or generic errors will be shown.
         except Exception as err:
             try:
                 if getDrink.inventory(selected_drink_by_user) == 0:

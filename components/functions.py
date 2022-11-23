@@ -20,7 +20,13 @@ def update_inserted_coins_dict(user_coin: str, inserted_coins_dict: dict):
         inserted_coins_dict.update({user_coin: 1})
 
 
-# before accepting the coin, checking if the coins supported.
+##########################################
+# FEATURES THAT SHOULD BE ADDED IS BELOW #
+##########################################
+
+# TO ADD: if coins inserted but order cancelled by "99" then refund coins.
+
+# TO ADD: before accepting the coin, checking if the coins supported.
 def check_if_coin_supported(user_coin, user_data, inserted_coins_dict):
     if user_coin in user_data:
         update_inserted_coins_dict(user_coin, inserted_coins_dict)
@@ -28,7 +34,7 @@ def check_if_coin_supported(user_coin, user_data, inserted_coins_dict):
         print("coin not supported")
 
 
-# this function will handle all refunds and update inventory
+# TO ADD: this function will handle all refunds and update inventory
 def refunds_handler():
     # refund by available coins
     # refund from larger to smaller
@@ -36,14 +42,14 @@ def refunds_handler():
     return None
 
 
-# before processing the order, this function will check if we have change to return to customer in case he overpaid.
+# TO ADD: before processing the order, this function will check if we have change to return to customer in case he overpaid.
 def coins_inventory_validation():
     # before processing the order, need to make sure we have a change for the customer
     # if not have change then process a refund of the same coin and cancel.
     return None
 
 
-# api credit card processing (DEMO).
+# TO ADD: api credit card processing (DEMO).
 def credit_card_processing():
     # need to make sure no coins will be updated.
     # need to make sure it will validate the credit card and funds by api.
@@ -51,7 +57,7 @@ def credit_card_processing():
     return None
 
 
-# admin panel will be here.
+# TO ADD: admin panel will be here.
 def admin_panel():
     # secret key to enter the admin panel
     # need to add the admin menu and functionality
