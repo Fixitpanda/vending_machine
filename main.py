@@ -105,12 +105,12 @@ def start_vending_machine():
         try:
             os.system('cls')  # cleaning terminal after each loop.
             drinks_menu_type_out()
-            selected_drink_by_user = int(
-                input(f"{localColors.select.BOLD}What is the drink number?: {localColors.select.ENDC}"))
+            selected_drink_by_user = int(input(f"{localColors.select.BOLD}What is the drink number?: {localColors.select.ENDC}"))
+            if selected_drink_by_user < 0:
+                raise ValueError("Negative index not supported by the menu.")
 
-            # check if item exist and if in stock before continue.
-            if selected_drink_by_user < len(dataManager.drinks.types.keys()) and getDrink.inventory(
-                    selected_drink_by_user) > 0:
+            # check if item exist and if in stock before continue, otherwise will be thrown to exception.
+            if selected_drink_by_user < len(dataManager.drinks.types.keys()) and getDrink.inventory(selected_drink_by_user) > 0:
                 while True:
                     try:
                         input_user_coin = round(float(input("Insert a coin: ")), 1)
@@ -168,23 +168,20 @@ def start_vending_machine():
             else:
                 raise
 
-        # errors scenarios handled here.
+        # errors output handled here.
         except Exception as err:
             try:
                 if getDrink.inventory(selected_drink_by_user) == 0:
                     print(f"{localColors.select.FAIL}Sorry, this drink out of stock!{localColors.select.ENDC}")
                     time.sleep(1)
-                    pass
-                elif selected_drink_by_user == 99:
-                    print("You already in main menu!")
-                    time.sleep(1)
-
                 else:
                     print(f"{localColors.select.FAIL}{err}{localColors.select.ENDC}")
                     time.sleep(1)
-                    pass
             except Exception as err:
-                if "Error --> main loop." or "list index out of range" or "invalid literal for int()" in str(err):
+                if selected_drink_by_user == 99:
+                    print("You already in main menu!")
+                    time.sleep(1)
+                elif "Error --> main loop." or "list index out of range" or "invalid literal for int()" in str(err):
                     print(f"{localColors.select.FAIL}Not in menu, invalid drink number!{localColors.select.ENDC}")
                     time.sleep(1)
                 else:
