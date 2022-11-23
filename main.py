@@ -6,7 +6,7 @@ from components import classes
 
 inserted_coins = {}  # empty list for coins processing.
 getDrink = classes.getDrink(dataManager.drinks.types)  # passing drinks to class getDrinks
-
+p
 
 # creating colorful menu based on drinks/stock inside the inventory.json file.
 def drinks_menu_type_out():
