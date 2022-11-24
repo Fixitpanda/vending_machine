@@ -4,7 +4,7 @@ from components.functions import *
 from components import localColors, dataManager
 from components import classes
 
-# empty list to store inserted coins in the memory.
+# empty list that stores inserted coins in the memory.
 inserted_coins = {}
 
 # passing drinks to class getDrinks
